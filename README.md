@@ -22,7 +22,7 @@ Data can be found on Kaggle website : https://www.kaggle.com/competitions/playgr
 
 # Usage
 Application can be used for two main usages :
-- Analyse data to create machine learning/deep learning model to estimate insurance subscription probability. 5 algorithms can be used to create model : Random Forest, Gradient Boosting, Neural Network, Extrem Gradient Boosting and Cat Boosting
+- Analyse data to create machine learning/deep learning model to estimate insurance subscription probability. 4 algorithms can be used to create model : Random Forest, Gradient Boosting, Neural Network, Extrem Gradient Boosting
 - Allow user to make prediction from a webpage
 
 
@@ -34,7 +34,6 @@ Application can be used for two main usages :
 | pandas | 2.2.2  |
 | openpyxl | 3.1.5  |
 | tensorflow | 2.17.0 |
-| catboost | 1.2.5 |
 | matplotlib | 3.9.1  |
 | scikit-learn | 1.5.1 |
 | xgboost | 2.1.0 |
@@ -44,4 +43,4 @@ Application can be used for two main usages :
 
 - Improve prediction
 
-- Implement modifications as in car price prediction (lightboost model, stacking, all classes defined in specific file)
+- Implement modifications as in car price prediction (lightboost and catboosting models, stacking, all classes defined in specific file)
