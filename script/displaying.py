@@ -53,150 +53,128 @@ def preparation():
         doc.asis('<meta name = "viewport" content="width=device-width, initial-scale = 1.0">')
 
     # Body start
-    with tag('body', klass = 'background'):
+    with tag('body', klass = 'background_brown_light'):
         with tag('div', klass = "container"):
-            with tag('div', klass = "row"):
+            with tag('div', klass = "row frame_content"):
                 with tag('div', klass = "col-md-9"):
-                    line('h1', 'Poisonous Mushroom prediction', klass = "text-center title")
+                    line('h1', 'Poisonous Mushroom prediction', klass = "text-center title purple")
                 with tag('div', klass = "col"):
                     doc.asis('<img src="/static/classic_mushroom.jpg" alt="Mushroom" width=100% height=100% title="Mushroom"/>')
                 
             # Launching prediction
             with tag('form', action = "{{url_for('treatment')}}", method = "POST", enctype = "multipart/form-data"):
                 
-                # Cap diameter
-                with tag('div', klass = "row"):
-                    with tag('div', klass = "col-md-9"):
-                        with tag('div', klass = "row justify-content-around margin_1"): 
+                with tag('div', klass = "row frame_content"):
+                    with tag('div', klass = "col"):
+                
+                        # Cap diameter
+                        with tag('div', klass = "row"):
                             with tag('div', klass = "col-md-6"):
-                                line('p', 'Diametre du chapeau [cm]', klass = "p2")
-                            with tag('div', klass = "col", style="text-align:center"):
-                                doc.input(name = 'cap-diameter', type = 'text', size = "8", placeholder = "0",
-                                          minlength = 1, klass = 'area_input')
-
-                # Cap shape
-                with tag('div', klass = "row"):
-                    with tag('div', klass = "col-md-9"):
+                                with tag('div', klass = "row margin_1"):
+                                    with tag('div', klass = "col-md-4"):
+                                        line('p', 'Diametre du chapeau [cm]', klass = "list_choice")
+                                    with tag('div', klass = "col", style="text-align:center"):
+                                        doc.input(name = 'cap-diameter', type = 'text', size = "8", placeholder = "0",
+                                                  minlength = 1, klass = 'area_input')
+                                        
+                            # Does bruise or bleed (Hematome ou saignement)
+                            with tag('div', klass = "col-md-6"):
+                                with tag('div', klass = "row justify-content-around margin_1"):
+                                    with tag('div', klass = "col-md-4"):
+                                        line('p', 'Consistance du champignon', klass = "list_choice")
+                                    with tag('div', klass = "col radio_text", style="text-align:center"):
+                                        with tag('div', klass = "row"):
+                                            with tag('div', klass = "col-md"):
+                                                doc.input(name = 'does-bruise-or-bleed', type = 'radio', value = 1, klass = 'radio_text')
+                                                text("Visqueux")
+                                            with tag('div', klass = "col-md"):
+                                                doc.input(name = 'does-bruise-or-bleed', type = 'radio', value = 0, klass = 'radio_text')
+                                                text("Fluide")
+        
+                        # Cap shape
+                        line('hr','')
                         with tag('div', klass = "row justify-content-around margin_1"):
-                            with tag('div', klass = "col-md-4"):
-                                line('p', 'Forme du chapeau', klass = "p2")
-                            with tag('div', klass = "col radio_text", style="text-align:center"):
+                            with tag('div', klass = "col-md-2"):
+                                line('p', 'Forme du chapeau', klass = "list_choice")
+                            with tag('div', klass = "col-md-7 radio_text", style="text-align:center"):
                                 with tag('div', klass = "row"):
                                     for SHAPE in CAP_SHAPE:
                                         with tag('div', klass = "col-md-4"):
                                             doc.input(name = 'cap-shape', type = 'radio', value = SHAPE, klass = 'radio_text')
                                             text(SHAPE)
-                    
-                    with tag('div', klass = "col"):
-                        doc.asis('<img src="/static/cap_shape_mushroom.jpg" alt="Cap_shape" width=100% height=100% title="Cap_shape"/>')
+                            
+                            with tag('div', klass = "col-md"):
+                                doc.asis('<img src="/static/cap_shape_mushroom.jpg" alt="Cap_shape" width=100% height=100% title="Cap_shape"/>')
+                                
                         
-                
-                # Cap color
-                with tag('div', klass = "row"):
-                    with tag('div', klass = "col-md-9"):
+                        # Cap color
+                        line('hr','')
                         with tag('div', klass = "row justify-content-around margin_1"):
-                            with tag('div', klass = "col-md-4"):
-                                line('p', 'Couleur majoritaire du chapeau', klass = "p2")
+                            with tag('div', klass = "col-md-3"):
+                                line('p', 'Couleur majoritaire du chapeau', klass = "list_choice")
                             with tag('div', klass = "col radio_text", style="text-align:center"):
                                 with tag('div', klass = "row"):
                                     for i, COLOR in enumerate(COLORS):
-                                        with tag('div', klass = "col-md-3", style = f"color:rgb({COLORS_RGB[i][0]},{COLORS_RGB[i][1]},{COLORS_RGB[i][2]}"):
+                                        with tag('div', klass = "col-md-2", style = f"color:rgb({COLORS_RGB[i][0]},{COLORS_RGB[i][1]},{COLORS_RGB[i][2]}"):
                                             doc.input(name = 'cap-color', type = 'radio', value = COLOR, klass = 'radio_text')
                                             text(COLOR)
+                        
 
-                    # Separation line
-                    with tag('div', klass = "col-md-9"):
-                        with tag('div', klass = "line_2"):
-                            text('')
-                
-                
-                # Does bruise or bleed (Hematome ou saignement)
-                with tag('div', klass = "row"):
-                    with tag('div', klass = "col-md-9"):
-                        with tag('div', klass = "row justify-content-around margin_1"):
-                            with tag('div', klass = "col-md-4"):
-                                line('p', 'Consistance du champignon', klass = "p2")
-                            with tag('div', klass = "col radio_text", style="text-align:center"):
-                                with tag('div', klass = "row"):
-                                    with tag('div', klass = "col-md"):
-                                        doc.input(name = 'does-bruise-or-bleed', type = 'radio', value = 1, klass = 'radio_text')
-                                        text("Visqueux")
-                                    with tag('div', klass = "col-md"):
-                                        doc.input(name = 'does-bruise-or-bleed', type = 'radio', value = 0, klass = 'radio_text')
-                                        text("Fluide")
-                    
-                    # Separation line
-                    with tag('div', klass = "col-md-9"):
-                        with tag('div', klass = "line_2"):
-                            text('')
-                
-                
-                # Gill color (lames sous le chapeau)
-                with tag('div', klass = "row"):
-                    with tag('div', klass = "col-md-9"):
-                        with tag('div', klass = "row justify-content-around margin_1"):
-                            with tag('div', klass = "col-md-4"):
-                                line('p', 'Couleur sous le chapeau', klass = "p2")
-                            with tag('div', klass = "col radio_text", style="text-align:center"):
-                                with tag('div', klass = "row"):
-                                    for i, COLOR in enumerate(COLORS):
-                                        with tag('div', klass = "col-md-3", style = f"color:rgb({COLORS_RGB[i][0]},{COLORS_RGB[i][1]},{COLORS_RGB[i][2]}"):
-                                            doc.input(name = 'gill-color', type = 'radio', value = COLOR, klass = 'radio_text')
-                                            text(COLOR)
-                    
-                    with tag('div', klass = "col"):
-                        doc.asis('<img src="/static/gill_mushroom.jpg" alt="gill" width=100% height=100% title="gill_mushroom"/>')
-                    
-                    # Separation line
-                    with tag('div', klass = "col-md-9"):
-                        with tag('div', klass = "line_2"):
-                            text('')
-                
-                
-                # Stem height
-                with tag('div', klass = "row"):
-                    with tag('div', klass = "col-md-9"):
-                        with tag('div', klass = "row justify-content-around margin_1"): 
+                        # Gill color (lames sous le chapeau)
+                        line('hr','')
+                        with tag('div', klass = "row"):
+                            with tag('div', klass = "col-md-9"):
+                                with tag('div', klass = "row justify-content-around margin_1"):
+                                    with tag('div', klass = "col-md-4"):
+                                        line('p', 'Couleur sous le chapeau', klass = "list_choice")
+                                    with tag('div', klass = "col radio_text", style="text-align:center"):
+                                        with tag('div', klass = "row"):
+                                            for i, COLOR in enumerate(COLORS):
+                                                with tag('div', klass = "col-md-3", style = f"color:rgb({COLORS_RGB[i][0]},{COLORS_RGB[i][1]},{COLORS_RGB[i][2]}"):
+                                                    doc.input(name = 'gill-color', type = 'radio', value = COLOR, klass = 'radio_text')
+                                                    text(COLOR)
+                            
+                            with tag('div', klass = "col"):
+                                doc.asis('<img src="/static/gill_mushroom.jpg" alt="gill" width=100% height=100% title="gill_mushroom"/>')
+                            
+                        
+                        # Stem height
+                        line('hr','')
+                        with tag('div', klass = "row justify-content-around"):
                             with tag('div', klass = "col-md-6"):
-                                line('p', 'Hauteur de la tige [cm]', klass = "p2")
-                            with tag('div', klass = "col", style="text-align:center"):
-                                doc.input(name = 'stem-height', type = 'text', size = "8", placeholder = "0",
-                                          minlength = 1, klass = 'area_input')
-                
-                # Stem width
-                with tag('div', klass = "row"):
-                    with tag('div', klass = "col-md-9"):
-                        with tag('div', klass = "row justify-content-around margin_1"): 
+                                with tag('div', klass = "row justify-content-around margin_1"): 
+                                    with tag('div', klass = "col-md-4"):
+                                        line('p', 'Hauteur de la tige [cm]', klass = "list_choice")
+                                    with tag('div', klass = "col", style="text-align:center"):
+                                        doc.input(name = 'stem-height', type = 'text', size = "8", placeholder = "0",
+                                                  minlength = 1, klass = 'area_input')
+                        
+                            # Stem width
                             with tag('div', klass = "col-md-6"):
-                                line('p', 'Largeur de la tige [mm]', klass = "p2")
-                            with tag('div', klass = "col", style="text-align:center"):
-                                doc.input(name = 'stem-width', type = 'text', size = "8", placeholder = "0",
-                                          minlength = 1, klass = 'area_input')
-                
-                # Stem color
-                with tag('div', klass = "row"):
-                    with tag('div', klass = "col-md-9"):
-                        with tag('div', klass = "row justify-content-around margin_1"):
-                            with tag('div', klass = "col-md-4"):
-                                line('p', 'Couleur de la tige', klass = "p2")
+                                with tag('div', klass = "row"): 
+                                    with tag('div', klass = "col-md-4"):
+                                        line('p', 'Largeur de la tige [mm]', klass = "list_choice")
+                                    with tag('div', klass = "col", style="text-align:center"):
+                                        doc.input(name = 'stem-width', type = 'text', size = "8", placeholder = "0",
+                                                  minlength = 1, klass = 'area_input')
+                        
+                        # Stem color
+                        line('hr','')
+                        with tag('div', klass = "row"):
+                            with tag('div', klass = "col-md-3"):
+                                line('p', 'Couleur de la tige', klass = "list_choice")
                             with tag('div', klass = "col radio_text", style="text-align:center"):
                                 with tag('div', klass = "row"):
                                     for i, COLOR in enumerate(COLORS):
                                         with tag('div', klass = "col-md-3", style = f"color:rgb({COLORS_RGB[i][0]},{COLORS_RGB[i][1]},{COLORS_RGB[i][2]}"):
                                             doc.input(name = 'stem-color', type = 'radio', value = COLOR, klass = 'radio_text')
                                             text(COLOR)
-                    
-                    # Separation line
-                    with tag('div', klass = "col-md-9"):
-                        with tag('div', klass = "line_2"):
-                            text('')
-                
-                # Has ring
-                with tag('div', klass = "row"):
-                    with tag('div', klass = "col-md-9"):
+                            
+                        # Has ring
+                        line('hr','')
                         with tag('div', klass = "row justify-content-around margin_1"):
                             with tag('div', klass = "col-md-4"):
-                                line('p', "Presence d'anneaux ?", klass = "p2")
+                                line('p', "Presence d'anneaux ?", klass = "list_choice")
                             with tag('div', klass = "col radio_text", style="text-align:center"):
                                 with tag('div', klass = "row"):
                                     with tag('div', klass = "col-md"):
@@ -205,62 +183,53 @@ def preparation():
                                     with tag('div', klass = "col-md"):
                                         doc.input(name = 'has-ring', type = 'radio', value = 0, klass = 'radio_text')
                                         text("Non")
-                
-                # Ring type
-                with tag('div', klass = "row"):
-                    with tag('div', klass = "col-md-9"):
+                        
+                        # Ring type
                         with tag('div', klass = "row justify-content-around margin_1"):
-                            with tag('div', klass = "col-md-4"):
-                                line('p', 'Forme des anneaux', klass = "p2")
+                            with tag('div', klass = "col-md-3"):
+                                line('p', 'Forme des anneaux', klass = "list_choice")
                             with tag('div', klass = "col radio_text", style="text-align:center"):
                                 with tag('div', klass = "row"):
                                     for TYPE in RING_TYPE:
-                                        with tag('div', klass = "col-md-4"):
+                                        with tag('div', klass = "col-md-3"):
                                             doc.input(name = 'ring-type', type = 'radio', value = TYPE, klass = 'radio_text')
                                             text(TYPE)
-                    
-                    # Separation line
-                    with tag('div', klass = "col-md-9"):
-                        with tag('div', klass = "line_2"):
-                            text('')
-                
-                # Habitat
-                with tag('div', klass = "row"):
-                    with tag('div', klass = "col-md-9"):
+                        
+                        # Habitat
+                        line('hr','')
                         with tag('div', klass = "row justify-content-around margin_1"):
-                            with tag('div', klass = "col-md-4"):
-                                line('p', 'Localisation', klass = "p2")
+                            with tag('div', klass = "col-md-3"):
+                                line('p', 'Localisation', klass = "list_choice")
                             with tag('div', klass = "col radio_text", style="text-align:center"):
                                 with tag('div', klass = "row"):
                                     for HABITAT in HABITATS:
-                                        with tag('div', klass = "col-md-4"):
+                                        with tag('div', klass = "col-md-3"):
                                             doc.input(name = 'habitat', type = 'radio', value = HABITAT, klass = 'radio_text')
                                             text(HABITAT)
-                                            
-                # Season
-                with tag('div', klass = "row"):
-                    with tag('div', klass = "col-md-9"):
+                                                    
+                        # Season
+                        line('hr','')
                         with tag('div', klass = "row justify-content-around margin_1"):
                             with tag('div', klass = "col-md-4"):
-                                line('p', 'Saison de developpement', klass = "p2")
+                                line('p', 'Saison de developpement', klass = "list_choice")
                             with tag('div', klass = "col radio_text", style="text-align:center"):
                                 with tag('div', klass = "row"):
                                     for SEASON in SEASONS:
-                                        with tag('div', klass = "col-md-5"):
+                                        with tag('div', klass = "col-md"):
                                             doc.input(name = 'season', type = 'radio', value = SEASON, klass = 'radio_text')
                                             text(SEASON)
-
-                
-
-                # Submit button
-                with tag('div', klass = "row"):
-                    with tag('div', klass = "text-center div2"):
-                        with tag('button', id = 'submit_button', name = "action", klass="btn btn-primary", value = 'Predict'):
-                            text('Predict')
+        
+                        
+        
+                        # Submit button
+                        with tag('div', klass = "row"):
+                            with tag('div', klass = "text-center div2"):
+                                with tag('button', id = 'submit_button', name = "action", klass="btn btn-primary", value = 'Predict'):
+                                    text('Est-ce que le champignon est comestible ?')
                                 
 
     # Saving HTML created
-    with open(f"./templates/predict.html", "w") as f:
+    with open("./templates/predict.html", "w") as f:
         f.write(indent(doc.getvalue(), indentation = '    ', newline = '\n', indent_text = True))
         f.close()
 
@@ -441,12 +410,12 @@ def prediction(CURRENT_DIRECTORY, MODEL_INPUT_HTML, DATA_NAMES_HTML):
             self.JS_CANVAS += '    } else { \n'
             self.JS_CANVAS += '      ctx4.fillStyle = rgb(255*proba_poisonous*proba_poisonous*proba_poisonous,255*(1-proba_poisonous)*(1-proba_poisonous)*(1-proba_poisonous),0);\n'
             self.JS_CANVAS += '      ctx4.clearRect(2*width/5,200,3*width/4,100);\n'
-            self.JS_CANVAS += '      ctx4.fillText("Poisonous probability",15*width/40,210);\n'
+            self.JS_CANVAS += '      ctx4.fillText("Probabilite de mourir",15*width/40,210);\n'
             self.JS_CANVAS += '      ctx4.fillText(numberWithCommas(textString),width/2,260);\n'
             self.JS_CANVAS += '      if (proba_poisonous > 0.5) { \n'
-            self.JS_CANVAS += '          ctx4.fillText("Poisonous",mushroom_center - 110,50);\n'
+            self.JS_CANVAS += '          ctx4.fillText("Empoisonne",mushroom_center - 130,38);\n'
             self.JS_CANVAS += '      } else { \n'
-            self.JS_CANVAS += '          ctx4.fillText("Safe",mushroom_center - 45,50);\n'
+            self.JS_CANVAS += '          ctx4.fillText("Comestible",mushroom_center - 110,38);\n'
             self.JS_CANVAS += '      }\n'
             self.JS_CANVAS += '      clearInterval(id);\n'
             self.JS_CANVAS += '    }\n'
@@ -474,32 +443,32 @@ def prediction(CURRENT_DIRECTORY, MODEL_INPUT_HTML, DATA_NAMES_HTML):
                 doc.asis('<meta name = "viewport" content="width=device-width, initial-scale = 1.0">')
 
             # Body start
-            with tag('body', klass = 'background'):
+            with tag('body', klass = 'background_brown_light'):
                 with tag('div', klass = "container"):
                     with tag('div', klass = "row"):
                         with tag('div', klass = "col-md-9"):
-                            line('h1', 'Poisonous Mushroom prediction', klass = "text-center title")
+                            line('h1', 'Poisonous Mushroom prediction', klass = "text-center title purple")
                         with tag('div', klass = "col"):
                             doc.asis('<img src="/static/classic_mushroom.jpg" alt="Mushroom" width=100% height=100% title="Mushroom"/>')
 
-
-                    with tag('div', klass="col"):
-                        with tag('canvas', id = "canvas1", width="540", height="600"):
-                            text("")
+                    with tag('div', klass = "row"):
+                        with tag('div', klass="col"):
+                            with tag('canvas', id = "canvas1", width="540", height="600"):
+                                text("")
+                        
+                                # Script for canvas
+                                doc.asis('<script src="/static/canevas.js"></script>')
                     
-                            # Script for canvas
-                            doc.asis('<script src="/static/canevas.js"></script>')
-                
-                        # Launching script when arriving on the page
-                        with tag('script', type="text/javascript"):
-                            text('myPercentage();')
+                            # Launching script when arriving on the page
+                            with tag('script', type="text/javascript"):
+                                text('myPercentage();')
                 
                 # Button to go back to previous page
                 with tag('form', action = "{{url_for('predict')}}", method = "GET", enctype = "multipart/form-data"):
                     with tag('div', klass = "text-center"):
                         with tag('button', id = 'submit_button', name = "action", klass="btn btn-primary", value = 'Go back to previous page'):
                             line('p1', '')
-                            text('Go back to previous page')
+                            text('Revenir a la page precedente')
 
             # Saving HTML
             with open("./templates/result.html", "w") as f:

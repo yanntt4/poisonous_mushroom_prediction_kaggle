@@ -5,6 +5,10 @@ Created on Fri Nov 17 13:12:32 2023
 @author: ythiriet
 """
 
+# Clearing all variables
+from IPython import get_ipython
+get_ipython().magic('reset -sf')
+
 
 # Global importation
 import math
@@ -1379,10 +1383,6 @@ Global_Parameters = Parameters()
 
 if Global_Parameters.CLEAR_MODE:
 
-    # Removing data
-    from IPython import get_ipython
-    get_ipython().magic('reset -sf')
-
     # Closing all figures
     plot.close("all")
 
@@ -1956,14 +1956,14 @@ elif Global_Parameters.XG_MODEL:
     with open('./models/xg_model.sav', 'wb') as f:
         joblib.dump(DATA_MODEL_XG.MODEL, f)
 
-# # Kaggle competition
-# for NAME in ["cap-shape","cap-color","does-bruise-or-bleed","gill-color","stem-color","has-ring","ring-type","habitat"]:
-#     Global_Data.TEST_DATAFRAME[NAME] = pd.to_numeric(Global_Data.TEST_DATAFRAME[NAME], errors = "coerce").fillna(0)
+# Kaggle competition
+for NAME in ["cap-shape","cap-color","does-bruise-or-bleed","gill-color","stem-color","has-ring","ring-type","habitat"]:
+    Global_Data.TEST_DATAFRAME[NAME] = pd.to_numeric(Global_Data.TEST_DATAFRAME[NAME], errors = "coerce").fillna(0)
 
-# A = pd.DataFrame(DATA_MODEL_XG.MODEL.predict(Global_Data.TEST_DATAFRAME), columns = ["class"])
-# # A = pd.DataFrame(np.argmax(DATA_MODEL_NN.MODEL.predict(Global_Data.TEST_DATAFRAME), axis = 1), columns = ["class"])
-# A = A.replace(0,"e")
-# A = A.replace(1,"p")
-# Global_Data.data_import(Global_Parameters.NAME_DATA_PREDICT)
-# A.index = Global_Data.TEST_DATAFRAME.id
-# A.to_csv("kaggle_compet.csv", index_label = "id")
+A = pd.DataFrame(DATA_MODEL_XG.MODEL.predict(Global_Data.TEST_DATAFRAME), columns = ["class"])
+# A = pd.DataFrame(np.argmax(DATA_MODEL_NN.MODEL.predict(Global_Data.TEST_DATAFRAME), axis = 1), columns = ["class"])
+A = A.replace(0,"e")
+A = A.replace(1,"p")
+Global_Data.data_import(Global_Parameters.NAME_DATA_PREDICT)
+A.index = Global_Data.TEST_DATAFRAME.id
+A.to_csv("kaggle_compet.csv", index_label = "id")
